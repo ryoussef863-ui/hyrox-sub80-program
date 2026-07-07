@@ -1,0 +1,203 @@
+:root {
+  --bg: #0b0e14;
+  --card: #151a24;
+  --card-2: #1c2230;
+  --border: #2a3141;
+  --text: #e8ecf4;
+  --text-dim: #9aa4b8;
+  --accent: #3b82f6;
+  --green: #22c55e;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 16px 60px;
+}
+
+h1 { font-size: 1.5rem; margin: 0 0 4px; }
+h2 { font-size: 1.15rem; margin: 18px 0 8px; }
+h3 { font-size: 1rem; margin: 0 0 6px; }
+p { margin: 0 0 8px; color: var(--text-dim); }
+
+button { font-family: inherit; cursor: pointer; }
+
+/* ---------- Dashboard ---------- */
+.hero {
+  background: linear-gradient(160deg, var(--card-2), var(--card));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.hero .sub { color: var(--text-dim); margin-bottom: 14px; }
+
+.countdown {
+  display: flex; flex-direction: column; align-items: center;
+  margin: 12px 0 18px;
+}
+.countdown .num { font-size: 2.6rem; font-weight: 800; color: var(--accent); line-height: 1; }
+.countdown .lbl { font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+.countdown.race-today .num { color: #ef4444; }
+
+.progress-bar {
+  height: 10px; background: #0006; border-radius: 999px; overflow: hidden; margin: 8px 0 4px;
+}
+.progress-bar.small { height: 6px; margin: 6px 0 2px; }
+.progress-fill { height: 100%; background: var(--accent); transition: width 0.3s; }
+.progress-label { font-size: 0.8rem; color: var(--text-dim); margin: 0; }
+.progress-label.small { font-size: 0.72rem; }
+
+.btn {
+  display: block; width: 100%; padding: 13px; margin-top: 10px;
+  background: var(--accent); color: white; border: none; border-radius: 10px;
+  font-size: 0.95rem; font-weight: 600;
+}
+.btn-guide { background: var(--card-2); border: 1px solid var(--border); color: var(--text); }
+.btn-today { background: var(--green); }
+.btn-complete { background: var(--card-2); border: 1px solid var(--border); color: var(--text); margin-top: 20px; }
+.btn-complete.done { background: var(--green); color: #06210f; border: none; }
+
+.phase-list { display: flex; flex-direction: column; gap: 12px; }
+.phase-card {
+  background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--accent);
+  border-radius: var(--radius); padding: 14px 16px; cursor: pointer;
+}
+.phase-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.phase-tag {
+  display: inline-block; font-size: 0.7rem; font-weight: 700; color: white;
+  padding: 3px 9px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.phase-weeks { font-size: 0.78rem; color: var(--text-dim); }
+.phase-dates { font-size: 0.8rem; margin-bottom: 6px; }
+.phase-focus { font-size: 0.85rem; }
+
+/* ---------- Topbar / nav ---------- */
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.back {
+  background: none; border: none; color: var(--accent); font-size: 0.9rem; padding: 6px 0;
+}
+.day-nav { display: flex; gap: 8px; }
+.pill {
+  background: var(--card-2); border: 1px solid var(--border); color: var(--text);
+  border-radius: 999px; width: 34px; height: 34px; font-size: 1.1rem;
+}
+
+.phase-banner, .day-banner, .guide-banner {
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px;
+}
+.guide-banner { background: var(--card); }
+
+/* ---------- Week list ---------- */
+.week-list { display: flex; flex-direction: column; gap: 10px; }
+.week-card {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px 14px; cursor: pointer;
+}
+.week-card-left { display: flex; flex-direction: column; gap: 2px; }
+.week-num { font-weight: 700; }
+.week-dates { font-size: 0.78rem; color: var(--text-dim); }
+.week-tag {
+  font-size: 0.68rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.03em; margin-top: 2px;
+}
+.week-card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; width: 90px; }
+
+/* ---------- Day list ---------- */
+.day-list { display: flex; flex-direction: column; gap: 8px; }
+.day-card {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px 14px; cursor: pointer;
+}
+.day-card.rest { opacity: 0.7; }
+.day-card.today { border-color: var(--accent); }
+.day-card.done { border-color: var(--green); }
+.day-card-left { display: flex; flex-direction: column; align-items: center; width: 46px; flex-shrink: 0; }
+.day-weekday { font-size: 0.7rem; text-transform: uppercase; color: var(--text-dim); }
+.day-date { font-size: 0.85rem; font-weight: 600; }
+.day-card-mid { flex: 1; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.day-title { font-size: 0.9rem; }
+.today-badge {
+  font-size: 0.6rem; background: var(--accent); color: white; padding: 2px 6px; border-radius: 999px;
+  text-transform: uppercase; font-weight: 700;
+}
+.check { color: var(--green); font-size: 1.2rem; }
+
+/* ---------- Day detail ---------- */
+.progression-badge {
+  background: var(--card-2); border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 14px; margin-bottom: 14px; font-size: 0.85rem;
+}
+.progression-badge p { margin: 4px 0 0; }
+
+.blocks { display: flex; flex-direction: column; gap: 12px; }
+.block {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px;
+}
+.block-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+.block-section { font-weight: 700; color: var(--accent); font-size: 0.9rem; }
+.block-structure { font-size: 0.75rem; color: var(--text-dim); }
+.block-goal { font-size: 0.82rem; font-style: italic; margin-bottom: 8px; }
+.block-items { margin: 0; padding-left: 18px; }
+.block-items li { margin-bottom: 4px; font-size: 0.9rem; }
+
+.rest-body, .race-body {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px;
+}
+.race-body { border-color: #ef4444; background: #ef444411; }
+.rest-body p, .race-body p { color: var(--text); margin-bottom: 10px; }
+
+.notes-section { margin-top: 16px; }
+.notes-section label { font-size: 0.8rem; color: var(--text-dim); display: block; margin-bottom: 6px; }
+.notes-section textarea {
+  width: 100%; min-height: 70px; background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; color: var(--text); padding: 10px; font-family: inherit; font-size: 0.88rem; resize: vertical;
+}
+
+/* ---------- Guide ---------- */
+.guide-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 14px; }
+.tab {
+  flex-shrink: 0; background: var(--card); border: 1px solid var(--border); color: var(--text-dim);
+  padding: 8px 14px; border-radius: 999px; font-size: 0.82rem; white-space: nowrap;
+}
+.tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+.guide-content h2 { margin-top: 0; }
+.guide-content .intro { font-size: 0.85rem; margin-bottom: 12px; }
+
+.pacing-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.pacing-table th, .pacing-table td { padding: 8px 6px; border-bottom: 1px solid var(--border); text-align: left; }
+.pacing-table th { color: var(--text-dim); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; }
+
+.station-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px;
+}
+.station-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px; }
+.station-target { font-size: 0.75rem; background: var(--card-2); padding: 3px 9px; border-radius: 999px; color: var(--text); }
+.station-card p { font-size: 0.87rem; }
+
+.guide-list { padding-left: 20px; }
+.guide-list li { margin-bottom: 10px; font-size: 0.9rem; color: var(--text); }
+
+.quality-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px;
+}
+.quality-card p { font-size: 0.87rem; margin: 0; }
+
+@media (min-width: 640px) {
+  #app { padding: 24px 24px 60px; }
+  .day-list, .week-list, .phase-list { gap: 12px; }
+}
