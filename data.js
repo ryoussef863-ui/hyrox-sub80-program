@@ -1,6 +1,6 @@
 /* ============================================================
    HYROX CAIRO — SUB-80 PROGRAM DATA
-   Program: 2026-07-07 (Tue) -> 2026-11-16 (Mon), 19 weeks
+   Program: 2026-07-06 (Mon, lead-in rest) -> 2026-11-16 (Mon), 19 weeks
    Rest days: every Monday & Friday (except race-week overrides)
    ============================================================ */
 
@@ -8,7 +8,7 @@ const PROGRAM_META = {
   raceName: "HYROX Cairo",
   raceDates: "Nov 14–15, 2026",
   goal: "Sub-80:00 finish",
-  startDate: "2026-07-07",
+  startDate: "2026-07-06",
   totalWeeks: 19
 };
 
@@ -31,6 +31,16 @@ const GENERIC_REST = {
     "Optional (10–15 min): easy walk, light stretching, foam rolling quads/calves/forearms.",
     "Prioritize: sleep (7–9h), hydration, and protein-forward meals.",
     "If something feels achy or off, this is the day to address it — not push through it."
+  ]
+};
+
+const LEAD_IN_REST = {
+  title: "Program Start — Welcome",
+  type: "REST",
+  body: [
+    "Your 19-week road to HYROX Cairo officially starts today. Today itself is a rest day — your first training session is tomorrow, Tuesday, and you'll train Tue/Wed/Thu/Sat/Sun each week with Monday and Friday as your standing rest days all the way to race day.",
+    "Use today to get set up: read through the Complete Guide (race overview, station cues, sub-80 pacing targets), make sure you have the equipment you'll need, and set your sleep/nutrition habits before the real work begins.",
+    "Sub-80 is a serious, achievable goal from here — one session at a time."
   ]
 };
 

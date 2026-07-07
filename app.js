@@ -2,6 +2,7 @@
    APP LOGIC — schedule generation, routing, rendering, storage
    ============================================================ */
 
+const LEAD_IN_DATE = new Date(2026, 6, 6); // Mon Jul 6 — program start / lead-in rest day
 const START_DATE = new Date(2026, 6, 7); // July is month index 6
 const RACE_DATE_1 = new Date(2026, 10, 14);
 const RACE_DATE_2 = new Date(2026, 10, 15);
@@ -28,9 +29,14 @@ function getPhaseForWeek(weekNumber) {
   return PHASES.find(p => weekNumber >= p.weeks[0] && weekNumber <= p.weeks[1]);
 }
 
-// Build the full 19-week x 7-day schedule once
+// Build the full 19-week x 7-day schedule once, with Mon Jul 6 prepended
+// as a lead-in rest day so the program's visible timeline starts on a Monday.
 const SCHEDULE = [];
 (function buildSchedule() {
+  SCHEDULE.push({
+    date: LEAD_IN_DATE, iso: isoOf(LEAD_IN_DATE), weekNumber: 1, weekday: "Mon",
+    slot: "REST", phaseId: 1, weekInPhase: 1, isLeadIn: true
+  });
   for (let i = 0; i < TOTAL_WEEKS * 7; i++) {
     const date = addDays(START_DATE, i);
     const weekNumber = Math.floor(i / 7) + 1;
@@ -61,6 +67,7 @@ function resolveContent(entry) {
   const phase = PHASES.find(p => p.id === entry.phaseId);
 
   if (entry.slot === "REST") {
+    if (entry.isLeadIn) return { ...LEAD_IN_REST, isRest: true };
     if (phase.id === 4 && phase.customWeeks[entry.weekNumber]) {
       const cw = phase.customWeeks[entry.weekNumber];
       if (entry.weekday === "Fri" && cw.FRI_REST) return { ...cw.FRI_REST, isRest: true };
