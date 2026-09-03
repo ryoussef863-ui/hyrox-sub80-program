@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Ledger — Personal Budget</title>
+
+<meta name="theme-color" content="#11151c">
+<meta name="description" content="Offline personal budget tracker — fixed expenses, savings target, and daily spending against your pool.">
+
+<!-- iOS home-screen install -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ledger">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="manifest" href="manifest.json">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <p class="brand">Ledger</p>
+  <h1 class="month" id="month-label">&nbsp;</h1>
+  <div class="rule"></div>
+</header>
+
+<main>
+
+  <!-- ===================== DASHBOARD ===================== -->
+  <section id="view-dashboard" class="view active">
+
+    <div class="hero">
+      <p class="hero-label">Spending pool remaining</p>
+      <p class="hero-amount" id="pool-remaining">—</p>
+      <p class="hero-sub" id="pool-sub">—</p>
+      <div class="progress-track"><div class="progress-fill" id="pool-progress"></div></div>
+    </div>
+
+    <div class="section">
+      <p class="section-title">This Month</p>
+      <div class="ledger-row">
+        <span class="label">Income</span><span class="leader"></span>
+        <span class="amount" id="row-income">—</span>
+      </div>
+      <div class="ledger-row">
+        <span class="label">Fixed expenses</span><span class="leader"></span>
+        <span class="amount" id="row-fixed">—</span>
+      </div>
+      <div class="ledger-row">
+        <span class="label" id="row-savings-label">Savings target</span><span class="leader"></span>
+        <span class="amount" id="row-savings">—</span>
+      </div>
+      <div class="ledger-row">
+        <span class="label">Spent so far</span><span class="leader"></span>
+        <span class="amount" id="row-spent">—</span>
+      </div>
+      <div class="ledger-row total">
+        <span class="label">Spending pool</span><span class="leader"></span>
+        <span class="amount" id="row-pool">—</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <p class="section-title">Savings status</p>
+      <p class="hero-sub" id="savings-status">—</p>
+    </div>
+
+    <div class="section">
+      <p class="section-title">By category</p>
+      <div class="chart-wrap">
+        <canvas id="category-chart" height="140"></canvas>
+        <div class="chart-legend" id="category-legend"></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===================== LOG ===================== -->
+  <section id="view-log" class="view">
+
+    <div class="section" style="margin-top:8px;">
+      <p class="section-title">Log an expense</p>
+      <form id="log-form">
+        <div class="field">
+          <label>Category</label>
+          <div class="chip-row" id="category-chips"></div>
+        </div>
+        <div class="field">
+          <label>Amount (EGP)</label>
+          <input type="number" id="log-amount" inputmode="decimal" placeholder="0" min="0" step="1" required>
+        </div>
+        <div class="field">
+          <label>Note (optional)</label>
+          <input type="text" id="log-note" placeholder="e.g. dinner with friends" maxlength="200">
+        </div>
+        <button type="submit" class="btn">Add entry</button>
+      </form>
+    </div>
+
+    <div class="section">
+      <p class="section-title">This month's entries</p>
+      <div id="entries-list"></div>
+    </div>
+
+  </section>
+
+  <!-- ===================== EXPENSES / SETTINGS ===================== -->
+  <section id="view-expenses" class="view">
+
+    <div class="section" style="margin-top:8px;">
+      <p class="section-title">Monthly income</p>
+      <div class="field" style="margin-bottom:4px;">
+        <input type="number" id="income-input" inputmode="decimal" min="0" step="100">
+      </div>
+    </div>
+
+    <div class="section">
+      <p class="section-title">Savings goal</p>
+      <div class="slider-wrap">
+        <div class="slider-value" id="savings-slider-value">17%</div>
+        <input type="range" id="savings-slider" min="5" max="30" step="1" value="17">
+        <div class="slider-band"><div class="band" id="savings-band"></div></div>
+        <div class="slider-ticks"><span>5%</span><span>15–20% target</span><span>30%</span></div>
+      </div>
+      <p class="helper-text">Recommended range is highlighted. Drag outside it if a month calls for it.</p>
+    </div>
+
+    <div class="section">
+      <p class="section-title">Fixed expenses</p>
+      <div id="fixed-list"></div>
+      <div class="ledger-row total">
+        <span class="label">Total</span><span class="leader"></span>
+        <span class="amount" id="fixed-total">—</span>
+      </div>
+      <button class="btn secondary small" id="add-fixed-btn" style="margin-top:14px;">+ Add fixed expense</button>
+    </div>
+
+    <div class="section">
+      <p class="section-title">Backup</p>
+      <p class="helper-text">All data stays on this device only. Export a backup before switching phones or clearing browser data.</p>
+      <div class="two-col">
+        <button class="btn secondary" id="export-btn">Export backup</button>
+        <button class="btn secondary" id="import-btn">Import backup</button>
+      </div>
+      <input type="file" id="import-file" accept="application/json" style="display:none;">
+    </div>
+
+  </section>
+
+  <!-- ===================== HISTORY ===================== -->
+  <section id="view-history" class="view">
+    <div class="section" style="margin-top:8px;">
+      <p class="section-title">Past months</p>
+      <div id="history-list"></div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<nav class="tabbar">
+  <button class="tab active" data-view="dashboard">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg>
+    <span class="lbl">Dashboard</span>
+  </button>
+  <button class="tab" data-view="log">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+    <span class="lbl">Log</span>
+  </button>
+  <button class="tab" data-view="expenses">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    <span class="lbl">Expenses</span>
+  </button>
+  <button class="tab" data-view="history">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+    <span class="lbl">History</span>
+  </button>
+</nav>
+
+<script src="js/storage.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
